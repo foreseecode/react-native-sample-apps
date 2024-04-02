@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
+import { NativeEventEmitter, NativeModules } from 'react-native';
 
 import { 
   Text, 
@@ -31,8 +32,30 @@ async function getContactDetails(type, callback) {
 }
 
 class MainScreen extends Component {
+
+  addListener(eventName, emitter) {
+    emitter.addListener(
+      eventName,
+      (event) => {
+          console.log("[[" + eventName + "]]");
+      });
+  }
+
   constructor(props) {
     super(props);
+
+    const verintEmitter = new NativeEventEmitter(VerintXM.nativeModule);
+
+    // defined in the Verint-XM SDK
+    this.addListener('onInvitePresented', verintEmitter);
+    this.addListener('onSurveyPresented', verintEmitter);
+    this.addListener('onSurveyCompleted', verintEmitter);
+    this.addListener('onSurveyCancelledByUser', verintEmitter);
+    this.addListener('onSurveyCancelledWithNetworkError', verintEmitter);
+    this.addListener('onInviteCompleteWithAccept', verintEmitter);
+    this.addListener('onInviteCompleteWithDecline', verintEmitter);
+    this.addListener('onInviteNotShownWithEligibilityFailed', verintEmitter);
+    this.addListener('onInviteNotShownWithSamplingFailed', verintEmitter);
 
     this.state={
       siginificantEvent: 0,
