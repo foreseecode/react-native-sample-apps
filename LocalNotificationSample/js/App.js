@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import { NativeEventEmitter, NativeModules } from 'react-native';
 
 import { 
   Text, 
@@ -34,8 +35,30 @@ const requestNotificationPermission = async () => {
 };
 
 class App extends Component {
+
+  addListener(eventName, emitter) {
+    emitter.addListener(
+      eventName,
+      (event) => {
+          console.log("[[" + eventName + "]]");
+      });
+  }
+
   constructor(props) {
     super(props);
+
+    const verintEmitter = new NativeEventEmitter(VerintXM.nativeModule);
+
+    // defined in the Verint-XM SDK
+    this.addListener('onInvitePresented', verintEmitter);
+    this.addListener('onSurveyPresented', verintEmitter);
+    this.addListener('onSurveyCompleted', verintEmitter);
+    this.addListener('onSurveyCancelledByUser', verintEmitter);
+    this.addListener('onSurveyCancelledWithNetworkError', verintEmitter);
+    this.addListener('onInviteCompleteWithAccept', verintEmitter);
+    this.addListener('onInviteCompleteWithDecline', verintEmitter);
+    this.addListener('onInviteNotShownWithEligibilityFailed', verintEmitter);
+    this.addListener('onInviteNotShownWithSamplingFailed', verintEmitter);
 
     this.state={
       siginificantEvent: 0,
