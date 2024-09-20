@@ -315,11 +315,11 @@ PODS:
   - React-jsinspector (0.72.3)
   - React-logger (0.72.3):
     - glog
-  - react-native-verint-xm-sdk (3.0.1):
+  - react-native-verint-xm-sdk (3.1.0):
     - React
-    - Verint-XM (= 7.1.1)
-    - Verint-XM/Digital (= 7.1.1)
-    - Verint-XM/SurveyManagement (= 7.1.1)
+    - Verint-XM (= 7.4.0)
+    - Verint-XM/Digital (= 7.4.0)
+    - Verint-XM/SurveyManagement (= 7.4.0)
   - React-NativeModulesApple (0.72.3):
     - hermes-engine
     - React-callinvoker
@@ -433,14 +433,14 @@ PODS:
   - RNGestureHandler (2.12.1):
     - React-Core
   - SocketRocket (0.6.1)
-  - Verint-XM (7.1.1):
-    - Verint-XM/SurveyManagement (= 7.1.1)
-  - Verint-XM/Core (7.1.1)
-  - Verint-XM/Digital (7.1.1):
+  - Verint-XM (7.4.0):
+    - Verint-XM/SurveyManagement (= 7.4.0)
+  - Verint-XM/Core (7.4.0)
+  - Verint-XM/Digital (7.4.0):
     - Verint-XM/Core
-  - Verint-XM/Predictive (7.1.1):
+  - Verint-XM/Predictive (7.4.0):
     - Verint-XM/Core
-  - Verint-XM/SurveyManagement (7.1.1):
+  - Verint-XM/SurveyManagement (7.4.0):
     - Verint-XM/Predictive
   - Yoga (1.14.0)
 
@@ -605,7 +605,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 59d1eb03af7d30b7d66589c410f13151271e8006
   React-jsinspector: b511447170f561157547bc0bef3f169663860be7
   React-logger: c5b527272d5f22eaa09bb3c3a690fee8f237ae95
-  react-native-verint-xm-sdk: 22bc3722a5b2c9d9432eb2045e1c6d3539d0d78b
+  react-native-verint-xm-sdk: bbe4b9d437abf5edbbb39b791bc7c30bd29531a8
   React-NativeModulesApple: c57f3efe0df288a6532b726ad2d0322a9bf38472
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5
   React-RCTActionSheet: c0b62af44e610e69d9a2049a682f5dba4e9dff17
@@ -625,7 +625,7 @@ SPEC CHECKSUMS:
   ReactCommon: 3ccb8fb14e6b3277e38c73b0ff5e4a1b8db017a9
   RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  Verint-XM: 9b3621ecaf41c9ecb72577fa41ef8c3a6500cd11
+  Verint-XM: a8ea62dd08c040833a3391f05fadba560076a3ed
   Yoga: 8796b55dba14d7004f980b54bcc9833ee45b28ce
 
 PODFILE CHECKSUM: 63a2f718837cb6daa11c078fd8d86cab2453c8b2
