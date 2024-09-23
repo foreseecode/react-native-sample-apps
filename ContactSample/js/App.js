@@ -172,12 +172,8 @@ class SetContactDetailsScreen extends Component {
               title="Save"
               style={{ width: 200, height: 40 }}
               onPress={() => { 
-                if (this.state.email && this.state.email !== "") {
-                  VerintXM.setContactDetails(`${this.state.email}`, "email");
-                }
-                if (this.state.phone && this.state.phone !== "") {
-                  VerintXM.setContactDetails(`${this.state.phone}`, "phone"); 
-                }
+              VerintXM.setContactDetails(`${this.state.email}`, "email");
+              VerintXM.setContactDetails(`${this.state.phone}`, "phone");
               } 
           } />
         </ScrollView>
