@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
-import { NativeEventEmitter, NativeModules } from 'react-native';
+import { NativeEventEmitter, NativeModules, Alert } from 'react-native';
 
 import { 
   Text, 
@@ -57,14 +57,30 @@ class MainScreen extends Component {
     this.addListener('onInviteNotShownWithEligibilityFailed', verintEmitter);
     this.addListener('onInviteNotShownWithSamplingFailed', verintEmitter);
 
-    this.state={
-      siginificantEvent: 0,
-      pageViews: 0
+    // handler for custom invite
+    verintEmitter.addListener(
+      "shouldShowCustomInvite",
+      (data) => {
+        // this demonstrates a no-invite custom invite that immediately shows the survey
+        VerintXM.customInviteAccepted()
+    });
+    
+    // handler for invalid contact details
+    verintEmitter.addListener(
+      "shouldSetInvalidInput",
+      (data) => {
+        alert("Invalid input! Reset state, set contact details, and try again.")
+        VerintXM.customInviteDeclined()
+    });
+
+    this.state = {
+      setCustomInviteEnabled: false
     }
  
     VerintXM.setDebugLogEnabled(true)
     VerintXM.startWithConfigurationJson(JSON.stringify(config))
     VerintXM.setSkipPoolingCheck(true)
+    VerintXM.setPreferredContactType("email")
   }
   
   render() {
@@ -100,6 +116,15 @@ class MainScreen extends Component {
               onPress={() => { VerintXM.resetState() }} />
             <Space />
             <Text style={[styles.text]}>Once the invite is shown, the SDK drops into an idle state until the repeat days have elapsed. Click here to reset the state of the SDK.</Text>
+            <VerintButton
+              title={`Skip invite using custom invites (${this.state.setCustomInviteEnabled})`}
+              onPress={() => {
+                let enabled = !this.state.setCustomInviteEnabled
+                VerintXM.setCustomInviteEnabled(enabled, 'CONTACT')
+                this.setState({setCustomInviteEnabled: enabled})
+              }} />
+            <Space />
+            <Text style={[styles.text]}>When enabled the survey will be displayed immediately using a custom invite that skips the UI and immediately accepts the invite.</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -147,8 +172,12 @@ class SetContactDetailsScreen extends Component {
               title="Save"
               style={{ width: 200, height: 40 }}
               onPress={() => { 
-                VerintXM.setContactDetails(`${this.state.email}`, "email");
-                VerintXM.setContactDetails(`${this.state.phone}`, "phone"); 
+                if (this.state.email && this.state.email !== "") {
+                  VerintXM.setContactDetails(`${this.state.email}`, "email");
+                }
+                if (this.state.phone && this.state.phone !== "") {
+                  VerintXM.setContactDetails(`${this.state.phone}`, "phone"); 
+                }
               } 
           } />
         </ScrollView>

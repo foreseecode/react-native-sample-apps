@@ -46,7 +46,7 @@ class App extends Component {
     this.addListener('onInviteNotShownWithEligibilityFailed', verintEmitter);
     this.addListener('onInviteNotShownWithSamplingFailed', verintEmitter);
 
-    // handle for custom invite
+    // handler for custom invite
     verintEmitter.addListener(
       "shouldShowCustomInvite",
       (data) => {
