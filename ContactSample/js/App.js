@@ -78,7 +78,7 @@ class MainScreen extends Component {
     }
  
     VerintXM.setDebugLogEnabled(true)
-    VerintXM.startWithConfigurationJson(JSON.stringify(config))
+    VerintXM.start(config)
     VerintXM.setSkipPoolingCheck(true)
     VerintXM.setPreferredContactType("email")
   }
