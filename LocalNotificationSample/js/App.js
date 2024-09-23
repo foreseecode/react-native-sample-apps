@@ -25,9 +25,9 @@ const requestNotificationPermission = async () => {
   try {
     const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log('You can use the camera');
+      console.log('Notification permission granted');
     } else {
-      console.log('Camera permission denied');
+      console.log('Notification permission denied');
     }
   } catch (err) {
     console.warn(err);
@@ -70,7 +70,7 @@ class App extends Component {
     }
  
     VerintXM.setDebugLogEnabled(true)
-    VerintXM.startWithConfigurationJson(JSON.stringify(config))
+    VerintXM.start(config)
     VerintXM.setSkipPoolingCheck(true)
 
   }
