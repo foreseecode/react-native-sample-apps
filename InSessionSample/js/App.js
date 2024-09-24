@@ -46,13 +46,20 @@ class App extends Component {
     this.addListener('onInviteNotShownWithEligibilityFailed', verintEmitter);
     this.addListener('onInviteNotShownWithSamplingFailed', verintEmitter);
 
-    this.state={
-      siginificantEvent: 0,
-      pageViews: 0
+    // handler for custom invite
+    verintEmitter.addListener(
+      "shouldShowCustomInvite",
+      (data) => {
+        // this demonstrates a no-invite custom invite that immediately shows the survey
+        VerintXM.customInviteAccepted();
+    });
+
+    this.state = {
+      setCustomInviteEnabled: false
     }
  
     VerintXM.setDebugLogEnabled(true)
-    VerintXM.startWithConfigurationJson(JSON.stringify(config))
+    VerintXM.start(config)
     VerintXM.setSkipPoolingCheck(true)
   }
   
@@ -82,6 +89,15 @@ class App extends Component {
               onPress={() => { VerintXM.resetState() }} />
             <Space />
             <Text style={[styles.text]}>Once the invite is shown, the SDK drops into an idle state until the repeat days have elapsed. Click here to reset the state of the SDK.</Text>
+            <VerintButton
+              title={`Skip invite using custom invites (${this.state.setCustomInviteEnabled})`}
+              onPress={() => {
+                let enabled = !this.state.setCustomInviteEnabled
+                VerintXM.setCustomInviteEnabled(enabled)
+                this.setState({setCustomInviteEnabled: enabled})
+              }} />
+            <Space />
+            <Text style={[styles.text]}>When enabled the survey will be displayed immediately using a custom invite that skips the UI and immediately accepts the invite.</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -108,6 +124,7 @@ const config = {
         {
             "url": "https://survey.vovici.com/se/705E3F053FB8395201",
             "name": "SampleSurvey",
+            "presentationMode": "MODAL",
             "significantEventThresholds": {
                 "instant_invite":1
             }
