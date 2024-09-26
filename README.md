@@ -1,14 +1,33 @@
 ## react-native-sample-apps
 
-## Requirements
+## Authenticating with the package repository (Android)
 
-* react: 18.2.0
-* react-native: 0.72.3
-* Android: 22+
-* iOS: 11.0+
-* Verint-XM React Native SDK 3.0.1+
+You will need to authenticate with GitHub Packages to download our native Android library.
+To do so, you'll need a personal key which can be generated from your GitHub account by following the [instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). 
+The token will need the `read:packages` permission.
+
+Once you have that key, you should set two environment variables on your machine: `GITHUB_USERNAME` for your username, and `GITHUB_PERSONAL_KEY` for your personal key.
+Those environment variables will be picked up by the following lines in the each sample project's `/build.gradle` file:
+
+```
+allprojects {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/foreseecode/public-packages")
+            credentials {
+                username = System.getenv("GITHUB_USERNAME")
+                password = System.getenv("GITHUB_PERSONAL_KEY")
+            }
+        }
+    }
+}
+```
+
+See [Getting Started guide](https://connect.verint.com/developers/xmsdk/w/mobilesdk/39087/get-started-with-the-verint-xm-react-native-sdk) for more information.
 
 ## Installing
+
 Clone this repo:
 
     $ git clone https://github.com/foreseecode/react-native-sample-apps.git
