@@ -70,7 +70,7 @@ class App extends Component {
     }
  
     VerintXM.setDebugLogEnabled(true)
-    VerintXM.start(config)
+    VerintXM.startWithSiteKey("mobsdk-react-localnotification-sample")
     VerintXM.setSkipPoolingCheck(true)
 
   }
@@ -103,28 +103,5 @@ class App extends Component {
     );
   }
 }
-
-const config = {
-    "notificationType":"EXIT_INVITE",
-    "invite": {
-        "logo": "VerintXM.logo",
-        "baseColor": [43, 101, 242]
-    },
-    "survey": {
-        "closeButtonColor": [255, 255, 255],
-        "closeButtonBackgroundColor": [12, 12, 12],
-        "headerColor": [43, 101, 242]
-    },
-    "surveyManagement": {
-        "surveys": [
-        {
-            "url": "https://survey.vovici.com/se/705E3F053FB8395201",
-            "name": "SampleSurvey",
-            "launchCount": 3
-        }
-    ]
-  }
-}
-
 
 export default App;
