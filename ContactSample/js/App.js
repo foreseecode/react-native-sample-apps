@@ -78,7 +78,7 @@ class MainScreen extends Component {
     }
  
     VerintXM.setDebugLogEnabled(true)
-    VerintXM.start(config)
+    VerintXM.startWithSiteKey("mobsdk-react-contact-sample")
     VerintXM.setSkipPoolingCheck(true)
     VerintXM.setPreferredContactType("email")
   }
@@ -180,40 +180,6 @@ class SetContactDetailsScreen extends Component {
     </SafeAreaView>
     );
   }
-}
-
-const config = {
-    "repeatDaysAfterDecline":5,
-    "repeatDaysAfterComplete":5,
-    "repeatDaysAfterAccept":3,
-    "notificationType":"CONTACT",
-    "cppParameters": {
-        "sample_app":"Contact Survey 2.0"
-    },
-    "invite": {
-        "logo": "verint_logo",
-        "baseColor": [43, 101, 242],
-    },
-    "survey": {
-        "closeButtonColor": [255, 255, 255],
-        "closeButtonBackgroundColor": [12, 12, 12],
-        "headerColor": [43, 101, 242],
-    },
-    "surveyManagement": {
-          "surveys": [
-              {
-                  "campaignId": "0",
-                  "groupId": "1885224709",
-                  "projectId": "1069037906",
-                  "url": "https://survey.vovici.com",
-                  "name": "SampleSurvey",
-                  "launchCount": 3,
-                  "significantEventThresholds": {
-                      "instant_invite":3
-                  }
-              }
-          ]
-      }
 }
 
 export default class App extends React.Component {
