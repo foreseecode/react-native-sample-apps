@@ -49,7 +49,12 @@ class App extends Component {
 
     const verintEmitter = new NativeEventEmitter(VerintXM.nativeModule);
 
-    // defined in the Verint-XM SDK
+    // startup listeners
+    this.addListener('onStarted', verintEmitter);
+    this.addListener('onStartedWithError', verintEmitter);
+    this.addListener('onFailedToStartWithError', verintEmitter);
+
+    // invite/survey lifecycle listeners
     this.addListener('onInvitePresented', verintEmitter);
     this.addListener('onSurveyPresented', verintEmitter);
     this.addListener('onSurveyCompleted', verintEmitter);
@@ -60,9 +65,7 @@ class App extends Component {
     this.addListener('onInviteNotShownWithEligibilityFailed', verintEmitter);
     this.addListener('onInviteNotShownWithSamplingFailed', verintEmitter);
 
-    this.state={
-      siginificantEvent: 0,
-      pageViews: 0
+    this.state = {
     }
 
     if (Platform.OS === 'android') {
