@@ -49,7 +49,12 @@ class App extends Component {
 
     const verintEmitter = new NativeEventEmitter(VerintXM.nativeModule);
 
-    // defined in the Verint-XM SDK
+    // startup listeners
+    this.addListener('onStarted', verintEmitter);
+    this.addListener('onStartedWithError', verintEmitter);
+    this.addListener('onFailedToStartWithError', verintEmitter);
+
+    // invite/survey lifecycle listeners
     this.addListener('onInvitePresented', verintEmitter);
     this.addListener('onSurveyPresented', verintEmitter);
     this.addListener('onSurveyCompleted', verintEmitter);
@@ -60,9 +65,7 @@ class App extends Component {
     this.addListener('onInviteNotShownWithEligibilityFailed', verintEmitter);
     this.addListener('onInviteNotShownWithSamplingFailed', verintEmitter);
 
-    this.state={
-      siginificantEvent: 0,
-      pageViews: 0
+    this.state = {
     }
 
     if (Platform.OS === 'android') {
@@ -70,7 +73,7 @@ class App extends Component {
     }
  
     VerintXM.setDebugLogEnabled(true)
-    VerintXM.start(config)
+    VerintXM.startWithSiteKey("mobsdk-react-localnotification-sample")
     VerintXM.setSkipPoolingCheck(true)
 
   }
@@ -103,28 +106,5 @@ class App extends Component {
     );
   }
 }
-
-const config = {
-    "notificationType":"EXIT_INVITE",
-    "invite": {
-        "logo": "VerintXM.logo",
-        "baseColor": [43, 101, 242]
-    },
-    "survey": {
-        "closeButtonColor": [255, 255, 255],
-        "closeButtonBackgroundColor": [12, 12, 12],
-        "headerColor": [43, 101, 242]
-    },
-    "surveyManagement": {
-        "surveys": [
-        {
-            "url": "https://survey.vovici.com/se/705E3F053FB8395201",
-            "name": "SampleSurvey",
-            "launchCount": 3
-        }
-    ]
-  }
-}
-
 
 export default App;
