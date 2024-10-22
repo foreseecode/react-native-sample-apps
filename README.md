@@ -26,6 +26,11 @@ allprojects {
 
 See [Getting Started guide](https://connect.verint.com/developers/xmsdk/w/mobilesdk/39087/get-started-with-the-verint-xm-react-native-sdk) for more information.
 
+## Prerequisites
+
+Make sure React Native and required Environment configured on your machine. 
+See: https://reactnative.dev/docs/environment-setup
+
 ## Installing
 
 Clone this repo:
@@ -57,11 +62,11 @@ This sample project demonstrates a basic implementation of the Verint-XM Predict
 It uses a native view to show a modal dialog to the user inviting them to take a survey when they have met the 
 configured threshold.
 
-
 ## ContactInvitationSample
+
 This example shows how to provide a user's contact information to the SDK for use in a CONTACT mode survey.
 
-
 ## LocalNotificationSample
+
 This sample project demonstrates a local notification invite. Accept the invite and then close the application. 
 You will receive a local notification linking the survey.
