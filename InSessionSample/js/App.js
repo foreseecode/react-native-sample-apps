@@ -35,7 +35,12 @@ class App extends Component {
 
     const verintEmitter = new NativeEventEmitter(VerintXM.nativeModule);
 
-    // defined in the Verint-XM SDK
+    // startup listeners
+    this.addListener('onStarted', verintEmitter);
+    this.addListener('onStartedWithError', verintEmitter);
+    this.addListener('onFailedToStartWithError', verintEmitter);
+
+    // invite/survey lifecycle listeners
     this.addListener('onInvitePresented', verintEmitter);
     this.addListener('onSurveyPresented', verintEmitter);
     this.addListener('onSurveyCompleted', verintEmitter);
@@ -46,13 +51,20 @@ class App extends Component {
     this.addListener('onInviteNotShownWithEligibilityFailed', verintEmitter);
     this.addListener('onInviteNotShownWithSamplingFailed', verintEmitter);
 
-    this.state={
-      siginificantEvent: 0,
-      pageViews: 0
+    // custom invite listener
+    verintEmitter.addListener(
+      "shouldShowCustomInvite",
+      (data) => {
+        // this demonstrates a no-invite custom invite that immediately shows the survey
+        VerintXM.customInviteAccepted();
+    });
+
+    this.state = {
+      setCustomInviteEnabled: false
     }
  
     VerintXM.setDebugLogEnabled(true)
-    VerintXM.startWithConfigurationJson(JSON.stringify(config))
+    VerintXM.startWithSiteKey("mobsdk-react-insession-sample")
     VerintXM.setSkipPoolingCheck(true)
   }
   
@@ -82,37 +94,19 @@ class App extends Component {
               onPress={() => { VerintXM.resetState() }} />
             <Space />
             <Text style={[styles.text]}>Once the invite is shown, the SDK drops into an idle state until the repeat days have elapsed. Click here to reset the state of the SDK.</Text>
+            <VerintButton
+              title={`Skip invite using custom invites (${this.state.setCustomInviteEnabled})`}
+              onPress={() => {
+                let enabled = !this.state.setCustomInviteEnabled
+                VerintXM.setCustomInviteEnabled(enabled)
+                this.setState({setCustomInviteEnabled: enabled})
+              }} />
+            <Space />
+            <Text style={[styles.text]}>When enabled the survey will be displayed immediately using a custom invite that skips the UI and immediately accepts the invite.</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
     );
-  }
-}
-
-const config = {
-    "notificationType": "IN_SESSION",
-    "cppParameters": {
-        "sample_app":"In Session Sample CPP"
-    },
-    "invite": {
-        "logo": "verint_logo",
-        "baseColor": [43, 101, 242]
-    },
-    "survey": {
-        "closeButtonColor": [255, 255, 255],
-        "closeButtonBackgroundColor": [12, 12, 12],
-        "headerColor": [43, 101, 242]
-    },
-    "surveyManagement": {
-    "surveys": [
-        {
-            "url": "https://survey.vovici.com/se/705E3F053FB8395201",
-            "name": "SampleSurvey",
-            "significantEventThresholds": {
-                "instant_invite":1
-            }
-        }
-    ]
   }
 }
 

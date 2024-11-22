@@ -317,11 +317,11 @@ PODS:
     - glog
   - react-native-safe-area-context (0.6.4):
     - React
-  - react-native-verint-xm-sdk (3.0.1):
-    - React
-    - Verint-XM (= 7.1.1)
-    - Verint-XM/Digital (= 7.1.1)
-    - Verint-XM/SurveyManagement (= 7.1.1)
+  - react-native-verint-xm-sdk (3.1.0):
+    - React-Core
+    - Verint-XM (= 7.4.0)
+    - Verint-XM/Digital (= 7.4.0)
+    - Verint-XM/SurveyManagement (= 7.4.0)
   - React-NativeModulesApple (0.72.3):
     - hermes-engine
     - React-callinvoker
@@ -466,14 +466,14 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - SocketRocket (0.6.1)
-  - Verint-XM (7.1.1):
-    - Verint-XM/SurveyManagement (= 7.1.1)
-  - Verint-XM/Core (7.1.1)
-  - Verint-XM/Digital (7.1.1):
+  - Verint-XM (7.4.0):
+    - Verint-XM/SurveyManagement (= 7.4.0)
+  - Verint-XM/Core (7.4.0)
+  - Verint-XM/Digital (7.4.0):
     - Verint-XM/Core
-  - Verint-XM/Predictive (7.1.1):
+  - Verint-XM/Predictive (7.4.0):
     - Verint-XM/Core
-  - Verint-XM/SurveyManagement (7.1.1):
+  - Verint-XM/SurveyManagement (7.4.0):
     - Verint-XM/Predictive
   - Yoga (1.14.0)
 
@@ -648,7 +648,7 @@ SPEC CHECKSUMS:
   React-jsinspector: b511447170f561157547bc0bef3f169663860be7
   React-logger: c5b527272d5f22eaa09bb3c3a690fee8f237ae95
   react-native-safe-area-context: 52342d2d80ea8faadd0ffa76d83b6051f20c5329
-  react-native-verint-xm-sdk: 22bc3722a5b2c9d9432eb2045e1c6d3539d0d78b
+  react-native-verint-xm-sdk: d48907c4cc49611dc5b15db259b3f55a20559e75
   React-NativeModulesApple: c57f3efe0df288a6532b726ad2d0322a9bf38472
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5
   React-RCTActionSheet: c0b62af44e610e69d9a2049a682f5dba4e9dff17
@@ -670,9 +670,9 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: 53ca20eee770c41173703f5948cd8898aa08262c
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  Verint-XM: 9b3621ecaf41c9ecb72577fa41ef8c3a6500cd11
+  Verint-XM: a8ea62dd08c040833a3391f05fadba560076a3ed
   Yoga: 8796b55dba14d7004f980b54bcc9833ee45b28ce
 
-PODFILE CHECKSUM: 152b20591e5a21d021f58ea9d4ee979bf2fb8e59
+PODFILE CHECKSUM: eb262423084990da5162c74e4f4ef635b813e82c
 
 COCOAPODS: 1.15.2

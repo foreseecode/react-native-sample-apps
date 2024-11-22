@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
-import { NativeEventEmitter, NativeModules } from 'react-native';
+import { NativeEventEmitter, NativeModules, Alert } from 'react-native';
 
 import { 
   Text, 
@@ -46,7 +46,12 @@ class MainScreen extends Component {
 
     const verintEmitter = new NativeEventEmitter(VerintXM.nativeModule);
 
-    // defined in the Verint-XM SDK
+    // startup listeners
+    this.addListener('onStarted', verintEmitter);
+    this.addListener('onStartedWithError', verintEmitter);
+    this.addListener('onFailedToStartWithError', verintEmitter);
+
+    // invite/survey lifecycle listeners
     this.addListener('onInvitePresented', verintEmitter);
     this.addListener('onSurveyPresented', verintEmitter);
     this.addListener('onSurveyCompleted', verintEmitter);
@@ -57,14 +62,30 @@ class MainScreen extends Component {
     this.addListener('onInviteNotShownWithEligibilityFailed', verintEmitter);
     this.addListener('onInviteNotShownWithSamplingFailed', verintEmitter);
 
-    this.state={
-      siginificantEvent: 0,
-      pageViews: 0
+    // custom invite listener
+    verintEmitter.addListener(
+      "shouldShowCustomInvite",
+      (data) => {
+        // this demonstrates a no-invite custom invite that immediately shows the survey
+        VerintXM.customInviteAccepted()
+    });
+    
+    // handler for invalid contact details
+    verintEmitter.addListener(
+      "shouldSetInvalidInput",
+      (data) => {
+        alert("Invalid input! Reset state, set contact details, and try again.")
+        VerintXM.customInviteDeclined()
+    });
+
+    this.state = {
+      setCustomInviteEnabled: false
     }
  
     VerintXM.setDebugLogEnabled(true)
-    VerintXM.startWithConfigurationJson(JSON.stringify(config))
+    VerintXM.startWithSiteKey("mobsdk-react-contact-sample")
     VerintXM.setSkipPoolingCheck(true)
+    VerintXM.setPreferredContactType("email")
   }
   
   render() {
@@ -100,6 +121,15 @@ class MainScreen extends Component {
               onPress={() => { VerintXM.resetState() }} />
             <Space />
             <Text style={[styles.text]}>Once the invite is shown, the SDK drops into an idle state until the repeat days have elapsed. Click here to reset the state of the SDK.</Text>
+            <VerintButton
+              title={`Skip invite using custom invites (${this.state.setCustomInviteEnabled})`}
+              onPress={() => {
+                let enabled = !this.state.setCustomInviteEnabled
+                VerintXM.setCustomInviteEnabled(enabled, 'CONTACT')
+                this.setState({setCustomInviteEnabled: enabled})
+              }} />
+            <Space />
+            <Text style={[styles.text]}>When enabled the survey will be displayed immediately using a custom invite that skips the UI and immediately accepts the invite.</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -147,48 +177,14 @@ class SetContactDetailsScreen extends Component {
               title="Save"
               style={{ width: 200, height: 40 }}
               onPress={() => { 
-                VerintXM.setContactDetails(`${this.state.email}`, "email");
-                VerintXM.setContactDetails(`${this.state.phone}`, "phone"); 
+              VerintXM.setContactDetails(`${this.state.email}`, "email");
+              VerintXM.setContactDetails(`${this.state.phone}`, "phone");
               } 
           } />
         </ScrollView>
     </SafeAreaView>
     );
   }
-}
-
-const config = {
-    "repeatDaysAfterDecline":5,
-    "repeatDaysAfterComplete":5,
-    "repeatDaysAfterAccept":3,
-    "notificationType":"CONTACT",
-    "cppParameters": {
-        "sample_app":"Contact Survey 2.0"
-    },
-    "invite": {
-        "logo": "verint_logo",
-        "baseColor": [43, 101, 242],
-    },
-    "survey": {
-        "closeButtonColor": [255, 255, 255],
-        "closeButtonBackgroundColor": [12, 12, 12],
-        "headerColor": [43, 101, 242],
-    },
-    "surveyManagement": {
-          "surveys": [
-              {
-                  "campaignId": "0",
-                  "groupId": "1885224709",
-                  "projectId": "1069037906",
-                  "url": "https://survey.vovici.com",
-                  "name": "SampleSurvey",
-                  "launchCount": 3,
-                  "significantEventThresholds": {
-                      "instant_invite":3
-                  }
-              }
-          ]
-      }
 }
 
 export default class App extends React.Component {
